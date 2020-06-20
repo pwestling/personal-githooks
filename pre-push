@@ -1,0 +1,11 @@
+#!/bin/sh
+
+git log origin/master..$(git rev-parse --abbrev-ref HEAD) --pretty=format:"%s" | grep '!rebase'
+
+## If the egrep command has any hits - echo a warning and exit with non-zero status.
+if [ $? == 0 ]
+then
+    echo "\n\nWARNING: You have rebase marker. Fix them before pushing\n\n"
+    exit 1
+fi
+
